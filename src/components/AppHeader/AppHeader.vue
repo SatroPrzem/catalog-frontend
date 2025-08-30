@@ -15,7 +15,7 @@
 </template>
 
 <script setup lang="ts">
-import svgHome from '@/assets/svgHome.vue'
+import svgHome from '@/components/AppHeader/svgHome.vue'
 </script>
 
 <style scoped lang="scss">
