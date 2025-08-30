@@ -23,9 +23,10 @@ header {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 2rem;
   margin-bottom: 2rem;
+  padding: 0.5rem;
   background-color: #f8f9fa;
+  // filter: blur(1.5rem);
 
   & > .nav-container {
     display: flex;
@@ -36,9 +37,6 @@ header {
     padding: 0 1rem;
 
     & > .logo-wrapper {
-      display: flex;
-      align-items: center;
-      justify-content: center;
       width: 40px;
       height: 40px;
       cursor: pointer;
@@ -47,16 +45,24 @@ header {
     & > nav {
       display: flex;
       align-items: center;
-      gap: 1.5rem;
+      gap: 2rem;
 
       & > .link {
-        text-decoration: none;
         color: #333;
         font-weight: 500;
         transition: color 0.3s;
+        text-decoration: none;
 
         &:hover {
           color: #007bff;
+        }
+
+        &:active {
+          color: #016cde;
+        }
+
+        &.router-link-active {
+          color: #005fc5;
         }
       }
     }
