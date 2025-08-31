@@ -2,7 +2,7 @@
   <header>
     <div class="nav-container">
       <div class="logo-wrapper" @click="goHome">
-        <SvgHome />
+        <SvgHome :class="{ active }" />
       </div>
       <nav>
         <RouterLink class="link" to="/">Strona główna</RouterLink>
@@ -17,8 +17,14 @@
 <script setup lang="ts">
 import SvgHome from '@/components/AppHeader/SvgHome.vue'
 import { useGoHome } from '@/composables/useGoHome'
+import { computed } from 'vue'
+import { useRoute } from 'vue-router'
+
+const route = useRoute()
 
 const { goHome } = useGoHome()
+
+const active = computed(() => route.path === '/')
 </script>
 
 <style scoped lang="scss">

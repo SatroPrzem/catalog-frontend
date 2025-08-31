@@ -49,7 +49,8 @@ svg {
     transition: fill 0.3s;
   }
 
-  &:hover {
+  &:hover,
+  &.active {
     & > g > .circle-border,
     & > g > .circle {
       fill: #ffe81d;
