@@ -2,7 +2,7 @@
   <header>
     <div class="nav-container">
       <div class="logo-wrapper">
-        <svgHome />
+        <SvgHome />
       </div>
       <nav>
         <RouterLink class="link" to="/">Strona główna</RouterLink>
@@ -15,7 +15,7 @@
 </template>
 
 <script setup lang="ts">
-import svgHome from '@/components/AppHeader/svgHome.vue'
+import SvgHome from '@/components/AppHeader/SvgHome.vue'
 </script>
 
 <style scoped lang="scss">
@@ -25,8 +25,10 @@ header {
   justify-content: center;
   margin-bottom: 2rem;
   padding: 0.5rem;
-  background-color: #f8f9fa;
-  // filter: blur(1.5rem);
+  background: #ffffffcc;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 0 16px #0000004d;
 
   & > .nav-container {
     display: flex;
