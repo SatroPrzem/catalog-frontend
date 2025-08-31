@@ -1,6 +1,6 @@
 <template>
-  <header>
-    <div :class="['nav-container', { hide }]">
+  <header :class="{ hide }">
+    <div class="nav-container">
       <div class="logo-wrapper" @click="goHome">
         <SvgHome :class="{ active }" />
       </div>
@@ -43,6 +43,15 @@ watch(y, (newY, oldY) => {
 
 <style scoped lang="scss">
 header {
+  --header-height: 80px;
+
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: var(--header-height);
+  box-sizing: border-box;
+  transition: top 0.3s ease;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -52,6 +61,10 @@ header {
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   box-shadow: 0 0 16px #0000004d;
+
+  &.hide {
+    top: calc(-1 * var(--header-height));
+  }
 
   & > .nav-container {
     display: flex;
