@@ -1,7 +1,7 @@
 <template>
   <header>
     <div class="nav-container">
-      <div class="logo-wrapper">
+      <div class="logo-wrapper" @click="goHome">
         <SvgHome />
       </div>
       <nav>
@@ -16,6 +16,9 @@
 
 <script setup lang="ts">
 import SvgHome from '@/components/AppHeader/SvgHome.vue'
+import { useGoHome } from '@/composables/useGoHome'
+
+const { goHome } = useGoHome()
 </script>
 
 <style scoped lang="scss">

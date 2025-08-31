@@ -5,11 +5,7 @@
 </template>
 
 <script setup lang="ts">
-import { useRouter } from 'vue-router'
+import { useGoHome } from '@/composables/useGoHome'
 
-const router = useRouter()
-
-const goHome = () => {
-  router.push('/')
-}
+const { goHome } = useGoHome()
 </script>

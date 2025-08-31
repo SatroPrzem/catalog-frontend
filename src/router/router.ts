@@ -4,38 +4,42 @@ import NotFound from '@/views/NotFound.vue'
 import CompaniesView from '@/views/CompaniesView.vue'
 import RegisterView from '@/views/RegisterView.vue'
 import LoginView from '@/views/LoginView.vue'
+import { ERoutesNames, ERoutesPaths } from './router.types'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
-      path: '/',
-      name: 'home',
+      path: ERoutesPaths.HOME,
+      name: ERoutesNames.HOME,
       component: HomeView,
     },
     {
-      path: '/companies',
-      name: 'companies',
+      path: ERoutesPaths.COMPANIES,
+      name: ERoutesNames.COMPANIES,
       component: CompaniesView,
     },
     {
-      path: '/register',
-      name: 'register',
+      path: ERoutesPaths.REGISTER,
+      name: ERoutesNames.REGISTER,
       component: RegisterView,
     },
     {
-      path: '/login',
-      name: 'login',
+      path: ERoutesPaths.LOGIN,
+      name: ERoutesNames.LOGIN,
+
       component: LoginView,
     },
     {
-      path: '/about',
-      name: 'about',
+      path: ERoutesPaths.ABOUT,
+      name: ERoutesNames.ABOUT,
+
       component: () => import('../views/AboutView.vue'),
     },
     {
-      path: '/:pathMatch(.*)*',
-      name: 'NotFound',
+      path: ERoutesPaths.NOT_FOUND,
+      name: ERoutesNames.NOT_FOUND,
+
       component: NotFound,
     },
   ],
