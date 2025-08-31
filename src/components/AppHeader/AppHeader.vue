@@ -1,6 +1,6 @@
 <template>
   <header>
-    <div class="nav-container">
+    <div :class="['nav-container', { hide }]">
       <div class="logo-wrapper" @click="goHome">
         <SvgHome :class="{ active }" />
       </div>
@@ -15,16 +15,30 @@
 </template>
 
 <script setup lang="ts">
+import { useScroll } from '@vueuse/core'
+import { computed, ref, watch } from 'vue'
+import { useRoute } from 'vue-router'
+
 import SvgHome from '@/components/AppHeader/SvgHome.vue'
 import { useGoHome } from '@/composables/useGoHome'
-import { computed } from 'vue'
-import { useRoute } from 'vue-router'
 
 const route = useRoute()
 
 const { goHome } = useGoHome()
 
+const { y } = useScroll(window)
+
+const hide = ref(false)
+
 const active = computed(() => route.path === '/')
+
+watch(y, (newY, oldY) => {
+  if (newY > oldY && newY > 100) {
+    hide.value = true
+  } else {
+    hide.value = false
+  }
+})
 </script>
 
 <style scoped lang="scss">

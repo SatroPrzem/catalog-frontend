@@ -1,5 +1,6 @@
-import { ERoutesNames } from '@/router/router.types'
 import { useRouter } from 'vue-router'
+
+import { ERoutesNames } from '@/router/router.types'
 
 export const useGoHome = () => {
   const router = useRouter()

@@ -1,9 +1,11 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '@/views/HomeView.vue'
-import NotFound from '@/views/NotFound.vue'
+
 import CompaniesView from '@/views/CompaniesView.vue'
-import RegisterView from '@/views/RegisterView.vue'
+import HomeView from '@/views/HomeView.vue'
 import LoginView from '@/views/LoginView.vue'
+import NotFound from '@/views/NotFound.vue'
+import RegisterView from '@/views/RegisterView.vue'
+
 import { ERoutesNames, ERoutesPaths } from './router.types'
 
 const router = createRouter({
