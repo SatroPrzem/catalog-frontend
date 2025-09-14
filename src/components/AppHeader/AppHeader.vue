@@ -52,7 +52,7 @@ header {
   --shadow-radius: 16px;
   --background-color: #ffffffcc;
 
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
