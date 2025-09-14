@@ -1,11 +1,14 @@
 @import './reset.css';
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+@import 'https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap';
 
 #app {
   margin: 0 auto;
-  font-family: 'Roboto', sans-serif;
+  font-family: Roboto, sans-serif;
   background-color: #888;
   min-height: 200vh;
-  background: #eeaeca;
-  background: radial-gradient(circle, rgba(238, 174, 202, 1) 0%, rgba(148, 187, 233, 1) 100%);
+  background-image: radial-gradient(
+    circle,
+    rgb(238 174 202 / 100%) 0%,
+    rgb(148 187 233 / 100%) 100%
+  );
 }

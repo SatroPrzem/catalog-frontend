@@ -19,7 +19,7 @@
 
 <script setup lang="ts">
 import { useScroll } from '@vueuse/core'
-import { computed, ref, watch } from 'vue'
+import { computed, onMounted, onUnmounted, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 
 import { useGoHome } from '@/composables/useGoHome'
@@ -28,21 +28,31 @@ import SvgHamburger from './SvgHamburger.vue'
 import SvgHome from './SvgHome.vue'
 
 const route = useRoute()
-
 const { goHome } = useGoHome()
-
 const { y } = useScroll(window)
 
 const hide = ref(false)
-
+const isMobile = ref(false)
 const mobileMenuOpen = ref(false)
-
-const toggleMenu = () => (mobileMenuOpen.value = !mobileMenuOpen.value)
 
 const active = computed(() => route.path === '/')
 
+const toggleMenu = () => (mobileMenuOpen.value = !mobileMenuOpen.value)
+
+const updateMobile = () => {
+  isMobile.value = window.innerWidth <= 768
+}
+
+onMounted(() => {
+  window.addEventListener('resize', updateMobile)
+})
+
+onUnmounted(() => {
+  window.removeEventListener('resize', updateMobile)
+})
+
 watch(y, (newY, oldY) => {
-  hide.value = newY > oldY && newY > 100 && !mobileMenuOpen.value
+  hide.value = isMobile.value && !mobileMenuOpen.value && newY > oldY && newY > 100
 })
 </script>
 
@@ -68,16 +78,11 @@ header {
   box-shadow: 0 0 var(--shadow-radius) #0000004d;
   transition: top 0.3s ease;
 
-  &.hide {
-    top: calc(-1 * (var(--header-height) + var(--shadow-radius)));
-  }
-
   & > .nav-container {
     display: flex;
     align-items: center;
     justify-content: space-between;
     width: 100%;
-    max-width: 1280px;
     padding: 0 1rem;
 
     & > .svg-wrapper {
@@ -117,6 +122,10 @@ header {
   }
 
   @media (max-width: 768px) {
+    &.hide {
+      top: calc(-1 * (var(--header-height) + var(--shadow-radius)));
+    }
+
     & > .nav-container {
       & > .nav-icon {
         display: flex;
@@ -132,7 +141,6 @@ header {
         box-shadow: 0 calc(var(--shadow-radius) / 2) var(--shadow-radius) #0000004d;
         width: 100%;
         padding: 1rem 0;
-        // transition: top 0.3s ease
 
         &.mobileMenuOpen {
           top: var(--header-height);
