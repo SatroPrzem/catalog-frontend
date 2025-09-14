@@ -1,10 +1,13 @@
 <template>
   <header :class="{ hide }">
     <div class="nav-container">
-      <div class="logo-wrapper" @click="goHome">
+      <div class="svg-wrapper" @click="goHome">
         <SvgHome :class="{ active }" />
       </div>
-      <nav>
+      <div class="svg-wrapper nav-icon" @click="toggleMenu">
+        <SvgHamburger class="nav-hamburger" :class="{ active: mobileMenuOpen }" />
+      </div>
+      <nav :class="{ mobileMenuOpen }">
         <RouterLink class="link" to="/">Strona główna</RouterLink>
         <RouterLink class="link" to="/companies">Firmy</RouterLink>
         <RouterLink class="link" to="/register">Rejestracja</RouterLink>
@@ -19,8 +22,10 @@ import { useScroll } from '@vueuse/core'
 import { computed, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 
-import SvgHome from '@/components/AppHeader/SvgHome.vue'
 import { useGoHome } from '@/composables/useGoHome'
+
+import SvgHamburger from './SvgHamburger.vue'
+import SvgHome from './SvgHome.vue'
 
 const route = useRoute()
 
@@ -30,40 +35,41 @@ const { y } = useScroll(window)
 
 const hide = ref(false)
 
+const mobileMenuOpen = ref(false)
+
+const toggleMenu = () => (mobileMenuOpen.value = !mobileMenuOpen.value)
+
 const active = computed(() => route.path === '/')
 
 watch(y, (newY, oldY) => {
-  if (newY > oldY && newY > 100) {
-    hide.value = true
-  } else {
-    hide.value = false
-  }
+  hide.value = newY > oldY && newY > 100 && !mobileMenuOpen.value
 })
 </script>
 
 <style scoped lang="scss">
 header {
   --header-height: 80px;
+  --shadow-radius: 16px;
+  --background-color: #ffffffcc;
 
-  position: fixed;
+  position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: var(--header-height);
   box-sizing: border-box;
-  transition: top 0.3s ease;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 2rem;
   padding: 0.5rem;
-  background: #ffffffcc;
+  background-color: var(--background-color);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
-  box-shadow: 0 0 16px #0000004d;
+  box-shadow: 0 0 var(--shadow-radius) #0000004d;
+  transition: top 0.3s ease;
 
   &.hide {
-    top: calc(-1 * var(--header-height));
+    top: calc(-1 * (var(--header-height) + var(--shadow-radius)));
   }
 
   & > .nav-container {
@@ -74,10 +80,14 @@ header {
     max-width: 1280px;
     padding: 0 1rem;
 
-    & > .logo-wrapper {
+    & > .svg-wrapper {
       width: 40px;
       height: 40px;
       cursor: pointer;
+    }
+
+    & > .nav-icon {
+      display: none;
     }
 
     & > nav {
@@ -101,6 +111,36 @@ header {
 
         &.router-link-active {
           color: #005fc5;
+        }
+      }
+    }
+  }
+
+  @media (max-width: 768px) {
+    & > .nav-container {
+      & > .nav-icon {
+        display: flex;
+      }
+
+      & > nav {
+        position: fixed;
+        top: calc(var(--header-height) - 400vh);
+        left: 0;
+        display: flex;
+        flex-direction: column;
+        background-color: var(--background-color);
+        box-shadow: 0 calc(var(--shadow-radius) / 2) var(--shadow-radius) #0000004d;
+        width: 100%;
+        padding: 1rem 0;
+        // transition: top 0.3s ease
+
+        &.mobileMenuOpen {
+          top: var(--header-height);
+        }
+
+        .link {
+          margin-bottom: 1rem;
+          font-size: 1.1rem;
         }
       }
     }
