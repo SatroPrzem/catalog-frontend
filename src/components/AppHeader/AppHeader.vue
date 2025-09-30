@@ -1,17 +1,17 @@
 <template>
   <header :class="{ hide }">
     <div class="nav-container">
-      <div class="svg-wrapper" @click="goHome">
+      <div class="svg-wrapper" @click="goToNavRoute()">
         <SvgHome :class="{ active }" />
       </div>
       <div class="svg-wrapper nav-icon" @click="toggleMenu">
         <SvgHamburger class="nav-hamburger" :class="{ active: mobileMenuOpen }" />
       </div>
       <nav :class="{ mobileMenuOpen }">
-        <RouterLink class="link" to="/">Strona główna</RouterLink>
-        <RouterLink class="link" to="/companies">Firmy</RouterLink>
-        <RouterLink class="link" to="/register">Rejestracja</RouterLink>
-        <RouterLink class="link" to="/login">Logowanie</RouterLink>
+        <li @click="goToNavRoute()" class="link">Strona główna</li>
+        <li @click="goToNavRoute(ERoutesNames.COMPANIES)" class="link">Firmy</li>
+        <li @click="goToNavRoute(ERoutesNames.REGISTER)" class="link">Rejestracja</li>
+        <li @click="goToNavRoute(ERoutesNames.LOGIN)" class="link">Logowanie</li>
       </nav>
     </div>
   </header>
@@ -22,13 +22,14 @@ import { useScroll } from '@vueuse/core'
 import { computed, onMounted, onUnmounted, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 
-import { useGoHome } from '@/composables/useGoHome'
+import { useRouterMethods } from '@/composables/useRouterMethods'
+import { ERoutesNames } from '@/router/router.types'
 
 import SvgHamburger from './SvgHamburger.vue'
 import SvgHome from './SvgHome.vue'
 
 const route = useRoute()
-const { goHome } = useGoHome()
+const { goToRoute } = useRouterMethods()
 const { y } = useScroll(window)
 
 const hide = ref(false)
@@ -41,6 +42,12 @@ const toggleMenu = () => (mobileMenuOpen.value = !mobileMenuOpen.value)
 
 const updateMobile = () => {
   isMobile.value = window.innerWidth <= 768
+}
+
+const goToNavRoute = (route: ERoutesNames = ERoutesNames.HOME) => {
+  if (mobileMenuOpen.value) mobileMenuOpen.value = false
+  console.log('goToNavRoute', route)
+  goToRoute(route)
 }
 
 onMounted(() => {
@@ -105,6 +112,8 @@ header {
         font-weight: 500;
         transition: color 0.3s;
         text-decoration: none;
+        cursor: pointer;
+        list-style: none;
 
         &:hover {
           color: #007bff;
